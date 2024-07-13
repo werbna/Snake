@@ -1,9 +1,12 @@
+
+
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
+  font-size:  1rem;
 }
 
 #container {
@@ -12,6 +15,9 @@ body {
   align-items: center;
   text-align: center;
 }
+#title {
+  font-size: 3rem;
+}
 
 #board {
   display: grid;
@@ -19,6 +25,7 @@ body {
   grid-template-rows: repeat(15,20px);
   gap: 1px;
   margin: 20px auto;
+  background-color: grey;
 }
 
 .cell {
@@ -27,15 +34,18 @@ body {
 }
 
 .snake {
-
+  background-color: green;
 }
 
 .fruit {
-
+ background-color: rebeccapurple;
 }
 
 #reset-button {
   margin-top: 10px;
-  padding: 5px 10px;
-  font-size: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: lightgray;
+  border: 0px solid black
 }

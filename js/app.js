@@ -21,7 +21,6 @@ const resetButton = document.getElementById
 function init() {
 
 }
-
 //TODO function to make the creation of the board. snake and food.
 //TODO function to move food.
 //TODO unshift method to grow the snake.
