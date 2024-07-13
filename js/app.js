@@ -1,8 +1,4 @@
-//function to make the creation of the board. snake and food.
-//function to move food.
-//unshift method to grow the snake.
-//Deny the snake of moving backwards.
-//reset function to reset everything back to base functionality of the game.
+
 
 /*-------------------------------- Constants --------------------------------*/
 const
@@ -25,3 +21,9 @@ const resetButton = document.getElementById
 function init() {
 
 }
+
+//TODO function to make the creation of the board. snake and food.
+//TODO function to move food.
+//TODO unshift method to grow the snake.
+//TODO Deny the snake of moving backwards.
+//todo reset function to reset everything back to base functionality of the game.
