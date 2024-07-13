@@ -23,6 +23,7 @@ const resetButton = document.getElementById
 /*----------------------------- Event Listeners -----------------------------*/
 
 /*-------------------------------- Functions --------------------------------*/
+//the init function should create the board.
 function init() {
   board.innerHTML = '';
   for (let i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
@@ -30,11 +31,24 @@ function init() {
     cell.classList.add('cell');
     board.appendChild(cell);
   }
+  placeFruit();
+  updateBoard();
+}
+function placeFruit() {
+  fruit = {
+    x: math.floor(math.random() * BOARD_SIZE),
+    y: math.floor(math.random() * BOARD_SIZE),
+  };
+  //its makes it so it doesn't place the fruit on the snake.
+  if (snake.some(segment => segment.x === fruit.x && segment.y === fruit.y)) {
+    placeFruit();
+  }
 }
 //TODO function to make the creation of the board. snake and food.
+
 //TODO function to move food.
 //TODO unshift method to grow the snake.
 //TODO Deny the snake of moving backwards.
 //todo reset function to reset everything back to base functionality of the game.
 //the init function should create the board.
-init()
+init();

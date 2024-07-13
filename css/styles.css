@@ -15,6 +15,7 @@ body {
   align-items: center;
   text-align: center;
 }
+
 #title {
   font-size: 3rem;
 }
@@ -25,12 +26,14 @@ body {
   grid-template-rows: repeat(15,20px);
   gap: 1px;
   margin: 20px auto;
+  border: 2px solid blue;
   background-color: grey;
 }
 
 .cell {
   width: 20px;
   height: 20px;
+  border: 1px dotted lightgray;
 }
 
 .snake {
@@ -38,7 +41,7 @@ body {
 }
 
 .fruit {
- background-color: rebeccapurple;
+  background-color: rebeccapurple;
 }
 
 #reset-button {
