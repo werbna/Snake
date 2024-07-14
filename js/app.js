@@ -80,15 +80,17 @@ function moveSnake() {
   if (head.x === fruit.x && head.y === fruit.y) {
     fruitCount++;
     fruitCountDisplay.textContent = `Fruit Eaten: ${fruitCount}`;
+    message.textContent = 'Im a sneeeeek';
     placeFruit();
   } else {
     snake.pop();
   }
   updateBoard();
 }
-//todo reset function to reset everything back to base functionality of the game.
+//reset function to reset everything back to base functionality of the game.
 function resetGame() {
-snake = [{ x:7, y:7 }]
+clearInterval(gameInterval);
+snake = [{ x:7, y:12 }]
 direction = DIRECTIONS.ArrowUp;
 fruit = { x:7 , y:7 }
 fruitCount = 0;
@@ -96,6 +98,7 @@ gameOver = false;
 message.textContent = 'Git Ready!';
 init();
 updateBoard()
+gameInterval = setInterval(moveSnake, 100);
 }
 
 init();
