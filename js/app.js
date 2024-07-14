@@ -3,18 +3,18 @@
 /*-------------------------------- Constants --------------------------------*/
 const BOARD_SIZE = 15
 const DIRECTIONS = {
-  ArrowUp: { x:0, y: 1 },
-  ArrowDown: { x:0, y: -1 },
+  ArrowUp: { x:0, y: -1 },
+  ArrowDown: { x:0, y: 1 },
   ArrowLeft: { x:-1, y: 0 },
   ArrowRight: { x:1, y: 0 },
 }
 /*-------------------------------- Variables --------------------------------*/
 let snake = [{ x:10, y:10 }]
-let direction = DIRECTIONS;
+let direction = DIRECTIONS.ArrowUp;
 let fruit = { x:7 , y:7 }
-// let gameInterval = setInterval(moveSnake, 100);
 let fruitCount = 0;
 let gameOver = false;
+let gameStarted = false;
 /*------------------------ Cached Element References ------------------------*/
 const board = document.getElementById('board')
 const message = document.getElementById('message')
@@ -22,11 +22,12 @@ const fruitCountDisplay = document.getElementById('fruit-count')
 const resetButton = document.getElementById('reset-button')
 
 /*----------------------------- Event Listeners -----------------------------*/
-//document.addEventListener('keydown', handleKeydown);
-//resetButton.addEventListener('click', resetGame);
+document.addEventListener('keydown', handleKeydown);
+resetButton.addEventListener('click', resetGame);
 /*-------------------------------- Functions --------------------------------*/
 //the init function should create the board.
 function init() {
+//function to make the creation of the board. 
   board.innerHTML = '';
   for (let i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
     let cell = document.createElement('div');
@@ -37,6 +38,7 @@ function init() {
   placeFruit();
 }
 function updateBoard() {
+//snake and food creation
   let cells = document.querySelectorAll('.cell');
   cells.forEach(cell => cell.classList.remove('snake', 'fruit'));
   snake.forEach(segment => {
@@ -47,6 +49,7 @@ function updateBoard() {
   cells[fruitIndex].classList.add('fruit');
 }
 function placeFruit() {
+//function to move food.
   fruit = {
     x: Math.floor(Math.random() * BOARD_SIZE),
     y: Math.floor(Math.random() * BOARD_SIZE),
@@ -57,12 +60,47 @@ function placeFruit() {
   }
 }
 
+function handleKeydown(event) {
+  if (DIRECTIONS[event.key]) {
+    direction = DIRECTIONS[event.key]
+  }
+}
+//this code allows for change of direction
+function moveSnake() {
+  let head = { x:snake[0].x + direction.x, y: snake[0].y + direction.y };
+  if (head.x < 0 || head.x >= BOARD_SIZE || head.y < 0 || head.y >= BOARD_SIZE || snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+    gameOver = true;
+    clearInterval(gameInterval);
+    message.textContent = 'Game Over!';
+    return
+  }
+  snake.unshift(head);
+  if (head.x === fruit.x && head.y === fruit.y) {
+    fruitCount++;
+    fruitCountDisplay.textContent = `Fruit Eaten: ${fruitCount}`;
+    placeFruit();
+  } else {
+    snake.pop();
+  }
+  updateBoard();
+}
+
+function resetGame() {
+snake = [{ x:10, y:10 }]
+direction = DIRECTIONS.ArrowUp;
+fruit = { x:7 , y:7 }
+gameInterval = setInterval(moveSnake, 100);
+fruitCount = 0;
+gameOver = false;
+message.textContent = 'Git Ready!';
+clearInterval(gameInterval);
+init();
+}
 
 
-//TODO function to make the creation of the board. snake and food.
-//TODO function to move food.
 //TODO unshift method to grow the snake.
 //TODO Deny the snake of moving backwards.
 //todo reset function to reset everything back to base functionality of the game.
 //the init function should create the board.
 init();
+gameInterval = setInterval(moveSnake, 150);
