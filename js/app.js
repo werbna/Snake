@@ -12,7 +12,7 @@ const DIRECTIONS = {
 let snake = [{ x:0, y:0 }]
 let direction = Directions.ArrowRight;
 let fruit = { x:0 , y:0 }
-let gameInterval;
+let gameInterval = setInterval(moveSnake, 100);
 let fruitCount = 0;
 let gameOver = false;
 /*------------------------ Cached Element References ------------------------*/
@@ -45,7 +45,16 @@ function placeFruit() {
   }
 }
 //TODO function to make the creation of the board. snake and food.
-
+function updateBoard() {
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell => classList.remove('snake', 'fruit'));
+  snake.forEach(segment => {
+    const index = segment.y * BOARD_SIZE + segment.x;
+    cells[index].classList.add('snake');
+  });
+  const fruitIndex = fruit.y * BOARD_SIZE + fruit.x;
+  cells[fruitIndex].classList.add('fruit');
+}
 //TODO function to move food.
 //TODO unshift method to grow the snake.
 //TODO Deny the snake of moving backwards.
