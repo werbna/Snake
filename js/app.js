@@ -15,6 +15,7 @@ let fruit = { x:7 , y:7 }
 let fruitCount = 0;
 let gameOver = false;
 let gameStarted = false;
+let gameInterval = setInterval(moveSnake, 100);
 /*------------------------ Cached Element References ------------------------*/
 const board = document.getElementById('board')
 const message = document.getElementById('message')
@@ -63,7 +64,7 @@ function placeFruit() {
 function handleKeydown(event) {
   if (DIRECTIONS[event.key]) {
     direction = DIRECTIONS[event.key]
-  }
+  } 
 }
 //this code allows for change of direction
 function moveSnake() {
@@ -86,22 +87,19 @@ function moveSnake() {
 }
 
 function resetGame() {
-snake = [{ x:10, y:10 }]
+snake = [{ x:7, y:7 }]
 direction = DIRECTIONS.ArrowUp;
 fruit = { x:7 , y:7 }
-gameInterval = setInterval(moveSnake, 100);
 fruitCount = 0;
 gameOver = false;
 message.textContent = 'Git Ready!';
-clearInterval(gameInterval);
 init();
-gameInterval = setInterval(moveSnake, 200);
+updateBoard()
 }
 
+init();
 
 //TODO unshift method to grow the snake.
 //TODO Deny the snake of moving backwards.
 //todo reset function to reset everything back to base functionality of the game.
 //the init function should create the board.
-init();
-gameInterval = setInterval(moveSnake, 150);
