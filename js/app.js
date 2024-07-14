@@ -9,7 +9,7 @@ const DIRECTIONS = {
   ArrowRight: { x:1, y: 0 },
 }
 /*-------------------------------- Variables --------------------------------*/
-let snake = [{ x:10, y:10 }]
+let snake = [{ x:7, y:12 }]
 let direction = DIRECTIONS.ArrowUp;
 let fruit = { x:7 , y:7 }
 let fruitCount = 0;
@@ -75,6 +75,7 @@ function moveSnake() {
     message.textContent = 'Game Over!';
     return
   }
+  //unshift method to grow the snake.
   snake.unshift(head);
   if (head.x === fruit.x && head.y === fruit.y) {
     fruitCount++;
@@ -85,7 +86,7 @@ function moveSnake() {
   }
   updateBoard();
 }
-
+//todo reset function to reset everything back to base functionality of the game.
 function resetGame() {
 snake = [{ x:7, y:7 }]
 direction = DIRECTIONS.ArrowUp;
@@ -99,7 +100,5 @@ updateBoard()
 
 init();
 
-//TODO unshift method to grow the snake.
 //TODO Deny the snake of moving backwards.
-//todo reset function to reset everything back to base functionality of the game.
-//the init function should create the board.
+
