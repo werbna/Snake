@@ -95,6 +95,7 @@ gameOver = false;
 message.textContent = 'Git Ready!';
 clearInterval(gameInterval);
 init();
+gameInterval = setInterval(moveSnake, 200);
 }
 
 
