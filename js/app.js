@@ -14,6 +14,7 @@ let fruitCount = 0;
 let gameOver = false;
 let gameStarted = false;
 let gameInterval = null;
+let directionChanged = false;
 /*------------------------ Cached Element References ------------------------*/
 const board = document.getElementById("board");
 const message = document.getElementById("message");
@@ -69,12 +70,18 @@ function placeFruit() {
   }
 }
 
-//Deny the snake of moving backwards.
+//deny the snake of moving backwards.
 function handleKeydown(event) {
-  if (DIRECTIONS[event.key]) {
+  if (DIRECTIONS[event.key] && !directionChanged && !gameOver) {
     let newDirection = DIRECTIONS[event.key];
-    if ((newDirection.x !== -direction.x || newDirection.y !== -direction.y) && !gameOver) {
-      direction = event.key; // Update direction to the key pressed
+    let currentDirection = DIRECTIONS[direction];
+    if (newDirection.x !== -currentDirection.x && newDirection.y !== -currentDirection.y) {
+      direction = event.key; // update direction to the key pressed
+      directionChanged = true;
+      if (!gameStarted) {
+        gameStarted = true;
+        gameInterval = setInterval(moveSnake, 100);
+      }
     }
   }
 }
@@ -104,6 +111,7 @@ function moveSnake() {
     snake.pop();
   }
   updateBoard();
+  directionChanged = false;
 }
 //reset function to reset everything back to base functionality of the game.
 function resetGame() {
@@ -117,7 +125,6 @@ function resetGame() {
   message.textContent = "Get Ready!";
   init();
   updateBoard();
-  gameInterval = setInterval(moveSnake, 100);
 }
 
 init();
