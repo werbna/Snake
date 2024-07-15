@@ -103,6 +103,7 @@ function resetGame() {
   direction = DIRECTIONS.ArrowUp;
   fruit = { x: 7, y: 7 };
   fruitCount = 0;
+  fruitCountDisplay.textContent = `you're just a baby`;
   gameOver = false;
   message.textContent = "Get Ready!";
   init();
