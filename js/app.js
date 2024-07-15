@@ -1,19 +1,19 @@
 /*-------------------------------- Constants --------------------------------*/
 const BOARD_SIZE = 15;
 const DIRECTIONS = {
-  ArrowUp: { x: 0, y: -1 },
-  ArrowDown: { x: 0, y: 1 },
-  ArrowLeft: { x: -1, y: 0 },
-  ArrowRight: { x: 1, y: 0 },
+  ArrowUp: { x: 0, y: -1 , },
+  ArrowDown: { x: 0, y: 1, },
+  ArrowLeft: { x: -1, y: 0, },
+  ArrowRight: { x: 1, y: 0, },
 };
 /*-------------------------------- Variables --------------------------------*/
 let snake = [{ x: 7, y: 12 }];
-let direction = DIRECTIONS.ArrowUp;
+let direction = 'ArrowUp';
 let fruit = { x: 7, y: 7 };
 let fruitCount = 0;
 let gameOver = false;
 let gameStarted = false;
-let gameInterval = setInterval(moveSnake, 100);
+let gameInterval = null;
 /*------------------------ Cached Element References ------------------------*/
 const board = document.getElementById("board");
 const message = document.getElementById("message");
@@ -29,6 +29,7 @@ function init() {
   //function to make the creation of the board.
   board.innerHTML = "";
   for (let i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
+//this line makes it so they are gridded together vs being put into one little cube over and over again.
     let cell = document.createElement("div");
     cell.classList.add("cell");
     board.appendChild(cell);
@@ -37,13 +38,22 @@ function init() {
   placeFruit();
 }
 function updateBoard() {
-  //snake and food creation
+  // snake and food creation
   let cells = document.querySelectorAll(".cell");
-  cells.forEach((cell) => cell.classList.remove("snake", "fruit"));
-  snake.forEach((segment) => {
-    let index = segment.y * BOARD_SIZE + segment.x;
-    cells[index].classList.add("snake");
+  // remove classes from all cells
+  cells.forEach((cell) => cell.classList.remove('snake-head', 'snake', 'fruit', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'));
+  
+   // add classes to snake segments
+  snake.forEach((segment, index) => {
+    let cellIndex = segment.y * BOARD_SIZE + segment.x;
+      cells[cellIndex].classList.add("snake");
+    if (index === 0) {
+      cells[cellIndex].classList.add('snake-head', direction);
+    }
   });
+
+
+  // add class to fruit
   let fruitIndex = fruit.y * BOARD_SIZE + fruit.x;
   cells[fruitIndex].classList.add("fruit");
 }
@@ -64,14 +74,13 @@ function handleKeydown(event) {
   if (DIRECTIONS[event.key]) {
     let newDirection = DIRECTIONS[event.key];
     if ((newDirection.x !== -direction.x || newDirection.y !== -direction.y) && !gameOver) {
-      direction = newDirection;
+      direction = event.key; // Update direction to the key pressed
     }
   }
-  }
-//this code allows for change of direction
-//Deny the snake of moving backwards.
+}
+//deny the snake of moving backwards, this code allows for change of direction
 function moveSnake() {
-  let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+  let head = { x: snake[0].x + DIRECTIONS[direction].x, y: snake[0].y + DIRECTIONS[direction].y };
   if (
     head.x < 0 ||
     head.x >= BOARD_SIZE ||
@@ -100,10 +109,10 @@ function moveSnake() {
 function resetGame() {
   clearInterval(gameInterval);
   snake = [{ x: 7, y: 12 }];
-  direction = DIRECTIONS.ArrowUp;
+  direction = 'ArrowUp'; // Reset direction
   fruit = { x: 7, y: 7 };
   fruitCount = 0;
-  fruitCountDisplay.textContent = `you're just a baby`;
+  fruitCountDisplay.textContent = `I'm just a baby`;
   gameOver = false;
   message.textContent = "Get Ready!";
   init();
