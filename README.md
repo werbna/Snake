@@ -1,6 +1,6 @@
 Title: Snake
 
-<img src='https://imgur.com/a/6dUg26Z'>
+<img src='https://imgur.com/a/65wLJkJ'>
 
 Description: The object of the game is to see how long the player can avoid colliding the snake with its own body and sometimes the boundaries of the game world while getting points for each item collected.
 
