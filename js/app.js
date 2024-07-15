@@ -85,7 +85,7 @@ function handleKeydown(event) {
     }
   }
 }
-//deny the snake of moving backwards, this code allows for change of direction
+//deny the snake of moving backwards, this code allows for 1 change of direction per square
 function moveSnake() {
   let head = { x: snake[0].x + DIRECTIONS[direction].x, y: snake[0].y + DIRECTIONS[direction].y };
   if (
