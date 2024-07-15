@@ -6,12 +6,6 @@ const DIRECTIONS = {
   ArrowLeft: { x: -1, y: 0 },
   ArrowRight: { x: 1, y: 0 },
 };
-const OPPOSITE_DIRECTIONS = {
-  ArrowUp: "ArrowDown",
-  ArrowDown: "ArrowUp",
-  ArrowLeft: "ArrowRight",
-  ArrowRight: "ArrowLeft",
-};
 /*-------------------------------- Variables --------------------------------*/
 let snake = [{ x: 7, y: 12 }];
 let direction = DIRECTIONS.ArrowUp;
@@ -67,16 +61,13 @@ function placeFruit() {
 
 //Deny the snake of moving backwards.
 function handleKeydown(event) {
-  if (DIRECTIONS[event.key] && !gameOver) {
+  if (DIRECTIONS[event.key]) {
     let newDirection = DIRECTIONS[event.key];
-    let currentDirectionKey = Object.keys(DIRECTIONS).find(
-      (key) => DIRECTIONS[key] === direction
-    );
-    if (OPPOSITE_DIRECTIONS[currentDirectionKey] !== event.key) {
+    if ((newDirection.x !== -direction.x || newDirection.y !== -direction.y) && !gameOver) {
       direction = newDirection;
     }
   }
-}
+  }
 //this code allows for change of direction
 //Deny the snake of moving backwards.
 function moveSnake() {
@@ -119,8 +110,5 @@ function resetGame() {
   gameInterval = setInterval(moveSnake, 100);
 }
 
-
-
 init();
 
-//Deny the snake of moving backwards.
