@@ -70,18 +70,19 @@ function placeFruit() {
   }
 }
 
-//deny the snake of moving backwards.
+//implements game start upon keypress.
 function handleKeydown(event) {
+  if (!gameStarted && DIRECTIONS[event.key]) {
+    gameStarted = true;
+    gameInterval = setInterval(moveSnake, 100);
+  }
+//deny the snake of moving backwards.
   if (DIRECTIONS[event.key] && !directionChanged && !gameOver) {
     let newDirection = DIRECTIONS[event.key];
     let currentDirection = DIRECTIONS[direction];
     if (newDirection.x !== -currentDirection.x && newDirection.y !== -currentDirection.y) {
       direction = event.key; // update direction to the key pressed
       directionChanged = true;
-      if (!gameStarted) {
-        gameStarted = true;
-        gameInterval = setInterval(moveSnake, 100);
-      }
     }
   }
 }
@@ -121,7 +122,9 @@ function resetGame() {
   fruit = { x: 7, y: 7 };
   fruitCount = 0;
   fruitCountDisplay.textContent = `I'm just a baby`;
-  gameOver = false;
+  gameOver = false; 
+  gameStarted = false; //reset game status
+  directionChanged = false; //resets direction
   message.textContent = "Get Ready!";
   init();
   updateBoard();
