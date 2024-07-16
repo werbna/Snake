@@ -107,6 +107,12 @@ function moveSnake() {
     fruitCount++;
     fruitCountDisplay.textContent = `Fruit Eaten: ${fruitCount}`;
     message.textContent = "Im a sneeeeek";
+    if (snake.length === BOARD_SIZE * BOARD_SIZE) {
+      gameOver = true;
+      clearInterval(gameInterval);
+      message.textContent = 'You Win! Cobra Kai!'
+      return
+    }
     placeFruit();
   } else {
     snake.pop();
