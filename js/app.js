@@ -100,7 +100,7 @@ function moveSnake() {
   ) {
     gameOver = true;
     clearInterval(gameInterval);
-    message.textContent = "Game Over!";
+    message.textContent = "Git Good!";
     return;
   }
   //unshift method to grow the snake.
