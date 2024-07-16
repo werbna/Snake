@@ -20,10 +20,12 @@ const board = document.getElementById("board");
 const message = document.getElementById("message");
 const fruitCountDisplay = document.getElementById("fruit-count");
 const resetButton = document.getElementById("reset-button");
-
+const helpButton = document.getElementById("help-button");
+const helpMessage = document.getElementById("help-message");
 /*----------------------------- Event Listeners -----------------------------*/
 document.addEventListener("keydown", handleKeydown);
 resetButton.addEventListener("click", resetGame);
+helpButton.addEventListener("click", toggleHelp);
 /*-------------------------------- Functions --------------------------------*/
 //the init function should create the board.
 function init() {
@@ -134,6 +136,14 @@ function resetGame() {
   message.textContent = "Get Ready!";
   init();
   updateBoard();
+}
+//this toggles the help button
+function toggleHelp() {
+  if (helpMessage.style.display === "none") {
+    helpMessage.style.display = "block";
+  } else {
+    helpMessage.style.display = "none";
+  }
 }
 
 init();
