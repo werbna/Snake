@@ -1,14 +1,14 @@
 /*-------------------------------- Constants --------------------------------*/
 const BOARD_SIZE = 15;
 const DIRECTIONS = {
-  ArrowUp: { x: 0, y: -1 , },
-  ArrowDown: { x: 0, y: 1, },
-  ArrowLeft: { x: -1, y: 0, },
-  ArrowRight: { x: 1, y: 0, },
+  ArrowUp: { x: 0, y: -1 },
+  ArrowDown: { x: 0, y: 1 },
+  ArrowLeft: { x: -1, y: 0 },
+  ArrowRight: { x: 1, y: 0 },
 };
 /*-------------------------------- Variables --------------------------------*/
 let snake = [{ x: 7, y: 12 }];
-let direction = 'ArrowUp';
+let direction = "ArrowUp";
 let fruit = { x: 7, y: 7 };
 let fruitCount = 0;
 let gameOver = false;
@@ -32,7 +32,7 @@ function init() {
   //function to make the creation of the board.
   board.innerHTML = "";
   for (let i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
-//this line makes it so they are gridded together vs being put into one little cube over and over again.
+    //this line makes it so they are gridded together vs being put into one little cube over and over again.
     let cell = document.createElement("div");
     cell.classList.add("cell");
     board.appendChild(cell);
@@ -44,18 +44,29 @@ function updateBoard() {
   // snake and food creation
   let cells = document.querySelectorAll(".cell");
   // remove classes from all cells
-  cells.forEach((cell) => cell.classList.remove('snake-head', 'snake', 'fruit', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'));
-  
-   // add classes to snake segments
+  cells.forEach((cell) =>
+    cell.classList.remove(
+      "snake-head",
+      "snake",
+      "snake-tail",
+      "fruit",
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight"
+    )
+  );
+
+  // add classes to snake segments
   snake.forEach((segment, index) => {
     let cellIndex = segment.y * BOARD_SIZE + segment.x;
-      cells[cellIndex].classList.add("snake");
+    cells[cellIndex].classList.add("snake");
     if (index === 0) {
-      cells[cellIndex].classList.add('snake-head', direction);
+      cells[cellIndex].classList.add("snake-head", direction);
+    } else if (index === snake.length - 1) { 
+      cells[cellIndex].classList.add("snake-tail");
     }
   });
-
-
   // add class to fruit
   let fruitIndex = fruit.y * BOARD_SIZE + fruit.x;
   cells[fruitIndex].classList.add("fruit");
@@ -78,11 +89,14 @@ function handleKeydown(event) {
     gameStarted = true;
     gameInterval = setInterval(moveSnake, 100);
   }
-//deny the snake of moving backwards.
+  //deny the snake of moving backwards.
   if (DIRECTIONS[event.key] && !directionChanged && !gameOver) {
     let newDirection = DIRECTIONS[event.key];
     let currentDirection = DIRECTIONS[direction];
-    if (newDirection.x !== -currentDirection.x && newDirection.y !== -currentDirection.y) {
+    if (
+      newDirection.x !== -currentDirection.x &&
+      newDirection.y !== -currentDirection.y
+    ) {
       direction = event.key; // update direction to the key pressed
       directionChanged = true;
     }
@@ -90,7 +104,10 @@ function handleKeydown(event) {
 }
 //deny the snake of moving backwards, this code allows for 1 change of direction per square
 function moveSnake() {
-  let head = { x: snake[0].x + DIRECTIONS[direction].x, y: snake[0].y + DIRECTIONS[direction].y };
+  let head = {
+    x: snake[0].x + DIRECTIONS[direction].x,
+    y: snake[0].y + DIRECTIONS[direction].y,
+  };
   if (
     head.x < 0 ||
     head.x >= BOARD_SIZE ||
@@ -112,8 +129,8 @@ function moveSnake() {
     if (snake.length === BOARD_SIZE * BOARD_SIZE) {
       gameOver = true;
       clearInterval(gameInterval);
-      message.textContent = 'You Win! Cobra Kai!'
-      return
+      message.textContent = "You Win! Cobra Kai!";
+      return;
     }
     placeFruit();
   } else {
@@ -126,11 +143,11 @@ function moveSnake() {
 function resetGame() {
   clearInterval(gameInterval);
   snake = [{ x: 7, y: 12 }];
-  direction = 'ArrowUp'; // Reset direction
+  direction = "ArrowUp"; // Reset direction
   fruit = { x: 7, y: 7 };
   fruitCount = 0;
   fruitCountDisplay.textContent = `I'm just a baby`;
-  gameOver = false; 
+  gameOver = false;
   gameStarted = false; //reset game status
   directionChanged = false; //resets direction
   message.textContent = "Get Ready!";
@@ -147,4 +164,3 @@ function toggleHelp() {
 }
 
 init();
-
